@@ -1,0 +1,13 @@
+# Django internals
+*.pyc
+__pycache__
+db.mysql
+
+# Virtual Environment (The big one)
+venv/
+env/
+.env
+
+# Editor settings (The cause of your warnings)
+.vscode/
+.idea/

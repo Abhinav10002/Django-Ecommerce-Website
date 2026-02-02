@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 style="text-align: center; margin-bottom: 20px;">Our Collection</h2>
+
+    <div class="product-grid" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        
+        {% for product in products %}
+        <div class="card" style="border: 1px solid #ddd; border-radius: 8px; width: 250px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+            {% else %}
+                <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center;">No Image</div>
+            {% endif %}
+
+            <h3 style="margin: 10px 0; font-size: 18px;">{{ product.name }}</h3>
+            <p style="color: #27ae60; font-weight: bold; font-size: 16px;">₹{{ product.price }}</p>
+            
+            <br>
+            {% if user.is_authenticated %}
+                <a href="{% url 'place_order' product.id %}" style="background: #e74c3c; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-size: 14px;">Buy Now</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="background: #95a5a6; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-size: 14px;">Login to Buy</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

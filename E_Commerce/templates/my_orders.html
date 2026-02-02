@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 40px auto;">
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">My Orders</h2>
+
+    {% if orders %}
+        <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <thead style="background: #2c3e50; color: white;">
+                <tr>
+                    <th style="padding: 12px; text-align: left;">Product</th>
+                    <th style="padding: 12px; text-align: left;">Date</th>
+                    <th style="padding: 12px; text-align: left;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 12px;">
+                        <strong>{{ order.product.name }}</strong><br>
+                        <span style="font-size: 12px; color: #777;">Price: ₹{{ order.product.price }}</span>
+                    </td>
+                    <td style="padding: 12px;">{{ order.ordered_date|date:"M d, Y" }}</td>
+                    <td style="padding: 12px;">
+                        <span style="padding: 5px 10px; border-radius: 15px; font-size: 12px; 
+                            background: {% if order.status == 'Pending' %}#f1c40f{% else %}#2ecc71{% endif %}; 
+                            color: white;">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div style="text-align: center; padding: 50px;">
+            <p>You haven't ordered anything yet.</p>
+            <a href="{% url 'collections' %}" style="color: #3498db;">Go Shopping</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

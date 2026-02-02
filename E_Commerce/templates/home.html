@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section id="home" class="hero-section">
+    
+    <ul class="cb-slideshow">
+        <li style="background-image: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1470&auto=format&fit=crop');"></li>
+        
+        <li style="background-image: url('https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1470&auto=format&fit=crop');"></li>
+        
+        <li style="background-image: url('https://images.unsplash.com/photo-1609630875171-b1321377ee65?q=80&w=1470&auto=format&fit=crop');"></li>
+    </ul>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <h1 ... data-aos="fade-down">Ride with Passion</h1>
+<p ... data-aos="fade-up" data-aos-delay="200">Get the best safety gear...</p>
+        
+    </div>
+
+</section>
+
+<section id="collections" style="padding: 60px 20px; background-color: #f9f9f9;">
+    <h2 ... data-aos="fade-right">Our Collection</h2>
+    
+    <div class="product-grid" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        {% for product in products %}
+        <div class="card" style="background: white; border: 1px solid #eee; border-radius: 10px; width: 280px; padding: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;">
+            
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+            {% else %}
+                <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">No Image</div>
+            {% endif %}
+
+            <h3 style="margin: 15px 0 10px; font-size: 1.2rem; color: #333;">{{ product.name }}</h3>
+            <p style="color: #27ae60; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">₹{{ product.price }}</p>
+            
+            {% if user.is_authenticated %}
+                <a href="{% url 'place_order' product.id %}" style="display: inline-block; width: 100%; background: #e74c3c; color: white; padding: 10px 0; text-decoration: none; border-radius: 5px; font-weight: bold;">Buy Now</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="display: inline-block; width: 100%; background: #95a5a6; color: white; padding: 10px 0; text-decoration: none; border-radius: 5px;">Login to Buy</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="about" style="padding: 80px 20px; background-color: white; text-align: center;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2 data-aos="zoom-in" style="color: #2c3e50; margin-bottom: 20px; font-size: 2.5rem;">About Us</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6; color: #666;">
+            Welcome to <strong>BikeGear</strong>, your number one source for all things riding. We're dedicated to providing you the very best of safety gear, with an emphasis on quality, durability, and style.
+            <br><br>
+            Founded in 2024, BikeGear has come a long way from its beginnings. When we first started out, our passion for "Safer Rides for Everyone" drove us to start our own business.
+        </p>
+    </div>
+</section>
+
+<section id="contact" style="padding: 80px 20px; background-color: #2c3e50; color: white; text-align: center;">
+    <h2 data-aos="zoom-in" margin-bottom:30px; font-size: 2.5rem; color: #ffffff>Contact Us</h2>
+    <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;">
+        <div style="max-width: 300px;">
+            <h3 style="margin-bottom: 10px;">📍 Visit Us</h3>
+            <p>Lovely Professional University<br>Punjab, India 144401</p>
+        </div>
+        <div style="max-width: 300px;">
+            <h3 style="margin-bottom: 10px;">📞 Call Us</h3>
+            <p>+91 6203664717<br>Mon - Fri, 9am - 6pm</p>
+        </div>
+        <div style="max-width: 300px;">
+            <h3 style="margin-bottom: 10px;">📧 Email Us</h3>
+            <p>support@bikegear.com<br>sales@bikegear.com</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
