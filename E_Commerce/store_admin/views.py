@@ -1,6 +1,6 @@
 from django.shortcuts import *
 from django.contrib.admin.views.decorators import staff_member_required
-from userApp.models import Order
+from .models import Order
 
 
 @staff_member_required

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container" style="max-width: 400px; margin: 50px auto; text-align: center;">
+        
+        <h2 style="color: var(--primary-dark);">🔐 Verification</h2>
+        <p>We sent a 6-digit code to your email.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                <p style="color: red; font-weight: bold;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <input type="text" name="otp" maxlength="6" required placeholder="123456"
+                   style="font-size: 24px; letter-spacing: 5px; text-align: center; width: 100%; padding: 10px; margin: 20px 0; border: 2px solid var(--accent); border-radius: 5px;">
+
+            <button type="submit" style="width: 100%;">Verify & Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,37 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="form-container">
-    <h2 style="text-align: center; color: #2c3e50;">Create Account</h2>
-    <br>
+<div class="container">
+    <div class="form-container" style="max-width: 450px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        
+        <h2 style="text-align: center; color: #333; margin-bottom: 30px;">Create Account</h2>
 
-    <form method="POST">
-        {% if form.errors %}
-        <div style="background-color: #ffdddd; border-left: 6px solid #f44336; padding: 10px; margin-bottom: 15px;">
-            <p style="color: #d8000c; font-weight: bold;">Please correct the following errors:</p>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p style="color: #d8000c;">• {{ error }}</p>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <p style="color: #d8000c;">• {{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" name="email" id="email" required placeholder="Enter your email">
+            </div>
 
-    
-        {% csrf_token %} <div class="form-group">
-            {{ form.as_p }}
-        </div>
+            <div class="django-fields">
+                {{ form.as_p }}
+            </div>
 
-        <button type="submit" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px;">
-            Sign Up
-        </button>
-    </form>
-    
-    <p style="text-align: center; margin-top: 15px;">
-        Already have an account? <a href="{% url 'login' %}">Login here</a>
-    </p>
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 20px;">
+            Already have an account? <a href="{% url 'login' %}" style="color: #ff9900; font-weight: bold;">Login here</a>
+        </p>
+    </div>
 </div>
+
+<style>
+    /* 1. Reset the form container styles */
+    .form-container {
+        font-family: sans-serif;
+    }
+
+    /* 2. Target ALL labels to make them bold and sit above inputs */
+    .form-container label {
+        display: block; /* Puts label on its own line */
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    /* 3. Target ALL inputs (Email, Username, Password) to look identical */
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"] {
+        width: 100%;             /* Full width */
+        padding: 12px;           /* Comfortable padding */
+        margin-bottom: 15px;     /* Space between fields */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;  /* Ensures padding doesn't break width */
+        font-size: 16px;
+    }
+
+    /* 4. Hide the annoying "Help Text" (like '150 characters or fewer') */
+    .helptext {
+        display: none !important;
+    }
+
+    /* 5. Style the paragraph tags Django creates */
+    .django-fields p {
+        margin: 0;
+    }
+
+    /* 6. Style the Register Button */
+    .register-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff9900; /* Your orange accent color */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 10px;
+    }
+    .register-btn:hover {
+        background-color: #e68a00;
+    }
+
+    /* 7. Hide bullet points if errors appear */
+    ul.errorlist {
+        list-style: none;
+        padding: 0;
+        color: red;
+        margin-bottom: 10px;
+    }
+</style>
 {% endblock %}

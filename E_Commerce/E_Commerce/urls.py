@@ -20,5 +20,6 @@ urlpatterns = [
     path('my-orders/', user_views.my_orders, name='my_orders'),
     path('dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
     path('update-order/<int:order_id>/', admin_views.update_status, name='update_status'),
+    path('verify-otp/', user_views.verify_otp, name='verify_otp'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
