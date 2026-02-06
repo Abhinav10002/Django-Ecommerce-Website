@@ -13,7 +13,7 @@ A full stack E-Commerce web application for bike riding gear and accessories.
 - User registration & login
 - Product listing
 - Order placement
-- Admin product management
+- Admin Product management
 
 ## How to Run
 1. Install Python
