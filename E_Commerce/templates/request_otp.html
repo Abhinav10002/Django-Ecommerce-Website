@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px; border-radius: 15px; border: none;">
+        
+        <div class="text-center mb-4">
+            <h2 class="fw-bold" style="color: #333;">Login via OTP</h2>
+            <p class="text-muted">Enter your username to receive a verification code</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label class="form-label fw-bold">Username</label>
+                <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter your username" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100 py-2 fw-bold text-dark" style="font-size: 1.1rem; border-radius: 8px;">
+                Send OTP 📩
+            </button>
+        </form>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'login' %}" class="text-decoration-none text-muted">
+                &larr; Back to Login
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

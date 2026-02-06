@@ -1,106 +1,152 @@
-{% load static %} <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Bike Gear Shop</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BikeGear Shop</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Enable Smooth Scrolling for the One-Page effect */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Navbar Styling --- */
+        .navbar {
+            background: linear-gradient(90deg, #1a1a1a, #2c3e50) !important;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ff9900 !important; /* Orange Accent */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            margin-right: 15px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ff9900 !important; /* Hover turns Orange */
+        }
+
+        /* --- Footer Styling --- */
+        footer {
+            margin-top: auto; /* Pushes footer to bottom */
+            background: #1a1a1a;
+            color: #888;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 3px solid #ff9900;
+        }
+    </style>
 </head>
 <body>
 
-    <nav>
-        <a href="{% url 'home' %}" class="logo">🏍️ BikeGear</a>
-        <div class="nav-links">
-    <a href="{% url 'home' %}#home">Home</a>
-    <a href="{% url 'home' %}#collections">Collections</a>
-    <a href="{% url 'home' %}#about">About Us</a>
-    <a href="{% url 'home' %}#contact">Contact</a>
-
-    {% if user.is_authenticated %}
-        {% if user.is_staff %}
-            <a href="{% url 'admin_dashboard' %}" style="background: #2c3e50; padding: 5px 10px; border-radius: 4px;">Owner Panel</a>
-        {% endif %}
-
-        <span style="color: #f39c12; margin-left: 10px;">Hello, {{ user.username }}</span>
-        <a href="{% url 'my_orders' %}">My Orders</a>
-        <a href="{% url 'logout' %}" style="background: #c0392b; padding: 5px 10px; border-radius: 4px;">Logout</a>
-
-    {% else %}
-        <a href="{% url 'register' %}">Register</a>
-        <a href="{% url 'login' %}">Login</a>
-    {% endif %}
-</div>
-    </nav>
-
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-    <footer>
-        <div class="footer-content">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}#home">
+                <i class="fa-solid fa-motorcycle"></i> BikeGear
+            </a>
             
-            <div class="footer-section about">
-                <h3>BikeGear</h3>
-                <p>
-                    Premium safety gear for riders who demand the best. 
-                    Ride safe, ride with passion, and explore the world 
-                    with confidence.
-                </p>
-                <div class="social-links" style="margin-top: 20px;">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
-            <div class="footer-section links">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'collections' %}">New Collections</a></li>
-                    <li><a href="{% url 'home' %}#about">About Us</a></li>
-                    <li><a href="{% url 'home' %}#contact">Contact Support</a></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#collection">Collection</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contact</a></li>
+                    
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_orders' %}">
+                                <i class="fa-solid fa-box-open"></i> My Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm ms-2 px-3 fw-bold" href="{% url 'logout' %}">
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item border-start ps-3 ms-2 border-secondary">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-warning btn-sm ms-2 px-3 fw-bold text-dark" href="{% url 'register' %}">
+                                Sign Up
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
-
-            <div class="footer-section contact">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-map-marker-alt" style="color: #ffa502; margin-right: 10px;"></i>Lovely Professional University, Punjab, India</p>
-                <p><i class="fas fa-phone" style="color: #ffa502; margin-right: 10px;"></i> +91 62036 64717</p>
-                <p><i class="fas fa-envelope" style="color: #ffa502; margin-right: 10px;"></i> support@bikegear.com</p>
-            </div>
-
         </div>
+    </nav>
 
-        <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: #151b20;">
-            
-            <p style="margin: 0; color: rgba(255,255,255,0.5);">
-                &copy; 2024 BikeGear Shop | Designed with Python & Django
-            </p>
+    <div style="height: 80px;"></div>
 
-            <div class="admin-link">
-                <a href="/admin/" target="_blank" style="color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.8rem; transition: 0.3s; display: flex; align-items: center; gap: 5px;">
-                    <i class="fas fa-lock"></i> Admin Login
-                </a>
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <div class="container">
+            <h5 class="text-white fw-bold mb-3">BikeGear Shop</h5>
+            <p class="small mb-3">Premium Gear for Riders, by Riders.</p>
+            <div class="mb-3">
+                <a href="#" class="text-white mx-2"><i class="fa-brands fa-facebook fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fa-brands fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fa-brands fa-twitter fa-lg"></i></a>
             </div>
+            <p class="small text-muted mb-0">&copy; 2026 BikeGear Shop. All rights reserved.</p>
         </div>
     </footer>
-    </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        AOS.init({
-            duration: 1000, 
-            once: true,     
-            offset: 100     
-        });
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: "{{ message.tags }}", // success, error, warning, info
+                    title: "{{ message }}",
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: 'top-end', // Shows nicely in top right corner
+                    background: '#fff',
+                    iconColor: '{{ message.tags }}' == 'error' ? '#d33' : '#28a745'
+                });
+            {% endfor %}
+        {% endif %}
     </script>
-</body>
 
 </body>
 </html>

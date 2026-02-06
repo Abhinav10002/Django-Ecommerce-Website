@@ -2,79 +2,195 @@
 
 {% block content %}
 
-<section id="home" class="hero-section">
-    
-    <ul class="cb-slideshow">
-        <li style="background-image: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1470&auto=format&fit=crop');"></li>
-        
-        <li style="background-image: url('https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1470&auto=format&fit=crop');"></li>
-        
-        <li style="background-image: url('https://images.unsplash.com/photo-1609630875171-b1321377ee65?q=80&w=1470&auto=format&fit=crop');"></li>
-    </ul>
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-        <h1 ... data-aos="fade-down">Ride with Passion</h1>
-<p ... data-aos="fade-up" data-aos-delay="200">Get the best safety gear...</p>
-        
+<section id="home">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1920&auto=format&fit=crop');">
+                    <div class="hero-overlay">
+                        <h1 class="display-3 fw-bold text-uppercase">Unleash the Rider</h1>
+                        <p class="lead">Premium Gear for the Modern Motorcyclist</p>
+                        <a href="#collection" class="btn btn-warning btn-lg mt-3 fw-bold">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1920&auto=format&fit=crop');">
+                    <div class="hero-overlay">
+                        <h1 class="display-3 fw-bold text-uppercase">Safety Meets Style</h1>
+                        <p class="lead">Jackets, Helmets, and Gloves designed for protection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </section>
 
-<section id="collections" style="padding: 60px 20px; background-color: #f9f9f9;">
-    <h2 ... data-aos="fade-right">Our Collection</h2>
+<section id="collection" class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h5 class="text-warning fw-bold text-uppercase">New Arrivals</h5>
+        <h2 class="fw-bold display-5">Latest Collection</h2>
+        <div style="width: 60px; height: 3px; background: #ff9900; margin: 10px auto;"></div>
+    </div>
     
-    <div class="product-grid" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div class="row g-4">
         {% for product in products %}
-        <div class="card" style="background: white; border: 1px solid #eee; border-radius: 10px; width: 280px; padding: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;">
-            
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-            {% else %}
-                <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">No Image</div>
-            {% endif %}
-
-            <h3 style="margin: 15px 0 10px; font-size: 1.2rem; color: #333;">{{ product.name }}</h3>
-            <p style="color: #27ae60; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">₹{{ product.price }}</p>
-            
-            {% if user.is_authenticated %}
-                <a href="{% url 'place_order' product.id %}" style="display: inline-block; width: 100%; background: #e74c3c; color: white; padding: 10px 0; text-decoration: none; border-radius: 5px; font-weight: bold;">Buy Now</a>
-            {% else %}
-                <a href="{% url 'login' %}" style="display: inline-block; width: 100%; background: #95a5a6; color: white; padding: 10px 0; text-decoration: none; border-radius: 5px;">Login to Buy</a>
-            {% endif %}
+        <div class="col-md-4">
+            <div class="card product-card h-100 border-0 shadow-sm">
+                <div style="height: 250px; overflow: hidden; position: relative;">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 100%; object-fit: cover;">
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center h-100 bg-light">No Image</div>
+                    {% endif %}
+                </div>
+                
+                <div class="card-body text-center p-4">
+                    <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                    <p class="text-muted small">{{ product.description|truncatewords:10 }}</p>
+                    <h4 class="text-warning fw-bold mb-3">₹{{ product.price }}</h4>
+                    
+                    <a href="{% url 'place_order' product.id %}" 
+                       onclick="confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });"
+                       class="btn btn-dark w-100 py-2">
+                       Add to Cart <i class="fa-solid fa-cart-shopping ms-2"></i>
+                    </a>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
 </section>
 
-<section id="about" style="padding: 80px 20px; background-color: white; text-align: center;">
-    <div style="max-width: 800px; margin: 0 auto;">
-        <h2 data-aos="zoom-in" style="color: #2c3e50; margin-bottom: 20px; font-size: 2.5rem;">About Us</h2>
-        <p style="font-size: 1.1rem; line-height: 1.6; color: #666;">
-            Welcome to <strong>BikeGear</strong>, your number one source for all things riding. We're dedicated to providing you the very best of safety gear, with an emphasis on quality, durability, and style.
-            <br><br>
-            Founded in 2024, BikeGear has come a long way from its beginnings. When we first started out, our passion for "Safer Rides for Everyone" drove us to start our own business.
-        </p>
-    </div>
-</section>
-
-<section id="contact" style="padding: 80px 20px; background-color: #2c3e50; color: white; text-align: center;">
-    <h2 data-aos="zoom-in" margin-bottom:30px; font-size: 2.5rem; color: #ffffff>Contact Us</h2>
-    <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;">
-        <div style="max-width: 300px;">
-            <h3 style="margin-bottom: 10px;">📍 Visit Us</h3>
-            <p>Lovely Professional University<br>Punjab, India 144401</p>
-        </div>
-        <div style="max-width: 300px;">
-            <h3 style="margin-bottom: 10px;">📞 Call Us</h3>
-            <p>+91 6203664717<br>Mon - Fri, 9am - 6pm</p>
-        </div>
-        <div style="max-width: 300px;">
-            <h3 style="margin-bottom: 10px;">📧 Email Us</h3>
-            <p>support@bikegear.com<br>sales@bikegear.com</p>
+<section id="about" class="py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="https://images.unsplash.com/photo-1558980664-3a031cf67ea8?q=80&w=800&auto=format&fit=crop" class="img-fluid rounded shadow-lg" alt="About Us">
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-warning fw-bold text-uppercase">Our Story</h5>
+                <h2 class="fw-bold mb-4">Driven by Passion</h2>
+                <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">
+                    Founded in 2024, <strong>BikeGear Shop</strong> started in a small garage with a simple mission: to provide riders with gear that doesn't compromise on safety or style.
+                </p>
+                <p class="text-muted">
+                    We hand-pick every helmet, jacket, and glove. If we wouldn't wear it on the track or the street, we won't sell it to you.
+                </p>
+            </div>
         </div>
     </div>
 </section>
 
+<section id="contact" class="py-5" style="background: #2c3e50; color: white;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h5 class="text-warning fw-bold text-uppercase">Get in Touch</h5>
+            <h2 class="fw-bold">Contact Us</h2>
+        </div>
+
+        <div class="row g-5">
+            
+            <div class="col-md-5">
+                <div class="p-4 h-100" style="background: rgba(255,255,255,0.1); border-radius: 10px; backdrop-filter: blur(5px);">
+                    <h3 class="mb-4 fw-bold">Store Information</h3>
+                    
+                    <div class="d-flex align-items-start mb-4">
+                        <i class="fa-solid fa-location-dot fa-2x text-warning me-3"></i>
+                        <div>
+                            <h5 class="fw-bold mb-1">Our Location</h5>
+                            <p class="mb-0 text-light">Lovely Professional University, Punjab, India-144401</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-4">
+                        <i class="fa-solid fa-phone fa-2x text-warning me-3"></i>
+                        <div>
+                            <h5 class="fw-bold mb-1">Phone Number</h5>
+                            <p class="mb-0 text-light">+91 62036 64717</p>
+                            <p class="small text-muted">Mon-Fri 9:00 AM - 8:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start">
+                        <i class="fa-solid fa-envelope fa-2x text-warning me-3"></i>
+                        <div>
+                            <h5 class="fw-bold mb-1">Email Address</h5>
+                            <p class="mb-0 text-light">support@bikegearshop.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <form action="{% url 'submit_contact' %}" method="POST" class="bg-white p-4 p-md-5 rounded shadow-lg text-dark">
+                    {% csrf_token %}
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Your Name</label>
+                            <input type="text" name="name" class="form-control" 
+                                   value="{% if user.is_authenticated %}{{ user.username }}{% endif %}" 
+                                   placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Email Address</label>
+                            <input type="email" name="email" class="form-control" 
+                                   value="{% if user.is_authenticated %}{{ user.email }}{% endif %}" 
+                                   placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Message</label>
+                            <textarea name="message" class="form-control" rows="5" placeholder="How can we help you today?" required></textarea>
+                        </div>
+                        
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-warning w-100 fw-bold py-2">
+                                Send Message <i class="fa-solid fa-paper-plane ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    
+    html {
+        scroll-behavior: smooth;
+    }
+
+    
+    .hero-slide {
+        height: 85vh; 
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 50px;
+        text-align: center;
+        color: white;
+        border-radius: 10px;
+        backdrop-filter: blur(3px);
+    }
+    
+    
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+    }
+</style>
 {% endblock %}

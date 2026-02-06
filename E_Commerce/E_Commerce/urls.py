@@ -21,5 +21,9 @@ urlpatterns = [
     path('dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
     path('update-order/<int:order_id>/', admin_views.update_status, name='update_status'),
     path('verify-otp/', user_views.verify_otp, name='verify_otp'),
+    path('update-status/<int:order_id>/', admin_views.update_status, name='update_status'),
+    path('login-otp/', user_views.request_otp, name='request_otp'),  
+    path('verify-otp/', user_views.verify_otp, name='verify_otp'),
+    path('submit-contact/', user_views.submit_contact, name='submit_contact'),    
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

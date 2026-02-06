@@ -14,6 +14,15 @@ class Product(models.Model):
         return self.name
     
 class Order(models.Model):
+    # Define the list of options
+    STATUS_CHOICES = (
+        ('Pending', 'Pending'),
+        ('Processing', 'Processing'),
+        ('Shipped', 'Shipped'),
+        ('Delivered', 'Delivered'),
+        ('Cancelled', 'Cancelled'),
+    )
+
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
@@ -21,7 +30,17 @@ class Order(models.Model):
     address = models.CharField(max_length=255, default='', blank=True)
     phone = models.CharField(max_length=20, default='', blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    status = models.BooleanField(default=False)
+
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending')
 
     def __str__(self):
         return f"{self.product.name} - {self.user.username}"
+    
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name}"
