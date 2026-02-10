@@ -21,4 +21,4 @@ A full stack E-Commerce web application for bike riding gear and accessories.
 3. Configure MySQL in settings.py
 4. Run migrations
 5. Start server:
-   python manage.py runserver
+   py manage.py runserver
