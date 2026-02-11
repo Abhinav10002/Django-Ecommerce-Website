@@ -118,7 +118,7 @@ h2::after {
     padding: 20px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: var(--transition); /* Smooth animation */
+    transition: var(--transition); 
     overflow: hidden;
     position: relative;
 }
@@ -137,7 +137,7 @@ h2::after {
     transition: transform 0.5s ease;
 }
 
-/* Zoom image slightly on hover */
+
 .card:hover img {
     transform: scale(1.05);
 }
@@ -175,7 +175,7 @@ a.btn-buy:hover, button:hover {
     transform: scale(1.05);
 }
 
-/* Form Container */
+
 .form-container {
     background: white;
     padding: 40px;
@@ -221,7 +221,7 @@ a.btn-buy:hover, button:hover {
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     border-radius: 0;
-    margin-top: -40px; /* Pull up to navbar */
+    margin-top: -40px; 
 }
 
 .cb-slideshow {

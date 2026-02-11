@@ -25,14 +25,13 @@ def update_status(request, order_id):
     return redirect('admin_dashboard')
 
 def update_status(request, order_id):
-    # 1. Find the specific order by its ID
+    
     order = get_object_or_404(Order, id=order_id)
     
-    # 2. Change status to True (Completed)
+
     order.status = True
     
-    # 3. Save the change to the database
-    order.save()
     
-    # 4. Refresh the dashboard page
+    order.save()
+
     return redirect('admin_dashboard')

@@ -3,8 +3,6 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from store_admin import views as admin_views
-
-# Import views from your apps
 from main import views as main_views
 from userApp import views as user_views
 from store_admin import views as admin_views
