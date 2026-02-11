@@ -13,7 +13,7 @@ A full stack E-Commerce web application for bike riding gear and accessories.
 - User registration & login
 - Product listing
 - Order placement
-- Admin product management
+- Admin Product management
 
 ## How to Run
 1. Install Python
@@ -21,4 +21,4 @@ A full stack E-Commerce web application for bike riding gear and accessories.
 3. Configure MySQL in settings.py
 4. Run migrations
 5. Start server:
-   python manage.py runserver
+   py manage.py runserver
